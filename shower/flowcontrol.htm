@@ -27,6 +27,28 @@
 			<p><a href="https://github.com/christkv/node-mongodb-native/blob/master/examples/blog.js#L67" target="_blank">Why you want flow control </a></p>
 		</section>
 	</div></div>
+	<div class="slide" id="PyramidOfDoom"><div>
+		<section>
+			<header>
+				<h2>Pyramid Of Doom</h2>
+			</header>
+			<pre class="s-16">
+			<code>step1(function (value1) {</code>
+			<code><mark>    </mark>step2(function (value2) {</code>
+			<code><mark>        </mark>step3(function (value3) {</code>
+			<code><mark>            </mark>step4(function (value4) {</code>
+			<code><mark>                </mark>step5(function (value5) {</code>
+			<code><mark>                    </mark>step6(function (value6) {</code>
+			<code><mark>                        </mark>// Do something with value6</code>
+			<code><mark>                    </mark>});</code>
+			<code><mark>                </mark>});</code>
+			<code><mark>            </mark>});</code>
+			<code><mark>        </mark>});</code>
+			<code><mark>    </mark>});</code>
+			<code>});</code>
+			</pre>
+		</section>
+	</div></div>
 	<div class="slide" id="Primitives"><div>
 		<section>
 			<header>
