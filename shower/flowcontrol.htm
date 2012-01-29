@@ -118,30 +118,56 @@
 			</ul>
 		</section>
 	</div></div>
-	<!--
-	<div class="slide" id="Picture"><div>
+	<div class="slide" id="After"><div>
 		<section>
 			<header>
-				<h2>Picture</h2>
+				<h2>After</h2>
 			</header>
+			<pre class="s-14">
+				<code>var next = after(arr.count, finished);</code>
+				<code>arr.forEach(doSomethingAsync);</code>
+				<code> </code>
+				<code>function doSomethingAsync(item) {</code>
+				<code>    somethingAsync(item, next);</code>
+				<code>}</code>
+				<code> </code>
+				<code>function finished() {</code>
+				<code>    var results = arguments;</code>
+				<code>    /* do some stuff with your results */</code>
+				<code>}</code>
+			</pre>
+			<p> After uses reference counting internally and hides the details from you </p>
 		</section>
 	</div></div>
-	<div class="slide" id="CodeSample"><div>
+	<div class="slide" id="After-count"><div>
 		<section>
 			<header>
-				<h2>Code Sample</h2>
+				<h2>Modifying the count</h2>
 			</header>
-			<pre>
-				<code>&lt;html lang="en-US"&gt;</code>
-				<code><mark>&lt;head&gt;</mark></code>
-				<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-				<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-				<code>    &lt;link rel="stylesheet" href="s/screen.css"&gt;</code>
-				<code>    &lt;script src="j/jquery.js"&gt;&lt;/script&gt;</code>
-				<code><mark>&lt;/head&gt;</mark></code>
+			<pre class="s-10">
+			    <code>var files = [],</code>
+			    <code>    next = after(1, finished);</code>
+			    <code>fs.readdir(somePath, readFolder);</code>
+			    <code> </code>
+				<code>function readFolder(err, files) {</code>
+				<code>    fs.readdir(loc, function (err, files) {</code>
+				<code>        next.count += files.length;</code>
+				<code>        files.forEach(function (file) {</code>
+				<code>            var filePath = path.join(loc, file);</code>
+				<code>            isFile(file) ? fs.readFile(filePath, readFile) : fs.readdir(filePath, readFolder);</code>
+				<code>        });</code>
+				<code>        next.count--;</code>
+				<code>    });</code>
+				<code>}</code>
+				<code> </code>
+				<code>function readFile(err, file) {</code>
+				<code>    files.push(file);</code>
+				<code>    next();</code>
+				<code>}</code>
 			</pre>
 		</section>
 	</div></div>
+	<!--
 	<div class="slide" id="CodeNotes"><div>
 		<section>
 			<header>
