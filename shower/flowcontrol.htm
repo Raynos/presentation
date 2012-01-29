@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>Flow control</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1274, user-scalable=no">
+	<link rel="stylesheet" href="themes/ribbon/styles/style.css">
+	<style>
+		#Cover H2 {
+			color:#FFF;
+			text-align:center;
+			font-size:70px;
+			}
+	</style>
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>FlowControl</h1>
+		<p>Raynos, <a href="https://github.com/Raynos/">github</a></p>
+	</header>
+	<div class="slide" id="Cover"><div>
+		<section>
+			<header>
+				<h2>Flow Control</h2>
+			</header>
+			<p> Flow control are techniques for managing asynchronous code. </p>
+			<p><a href="https://github.com/christkv/node-mongodb-native/blob/master/examples/blog.js#L67" target="_blank">Why you want flow control </a></p>
+		</section>
+	</div></div>
+	<div class="slide" id="Primitives"><div>
+		<section>
+			<header>
+				<h2>Flow Control primitives</h2>
+			</header>
+			<ul>
+				<li> Named functions </li>
+				<li> Reference counting </li>
+				<li> next functions </li>
+			</ul>
+		</section>
+	</div></div>
+	<div class="slide" id="NamedFunctions"><div>
+		<section>
+			<header>
+				<h2>Named functions</h2>
+			</header>
+			<pre class="s-14">
+			<code>articlesCollection.find({}, { 'sort':[['title', 1]] }, iterateCursors);</code>
+			<code> </code>
+			<code>function iterateCursors(err, cursor) {</code>
+            <code>    cursor.each(logArticle);</code>
+            <code>});</code>
+            <code> </code>
+            <code>function logArticle(err, article) {</code>
+	        <code>    if(article != null) {</code>
+	        <code>        console.log("[" + article.title + "]:[" + article.body + "]:[" + article.author_id.toHexString() + "]");</code>
+	        <code>        console.log(">> Closing connection");</code>
+	        <code>        db.close();</code>
+	        <code>    }</code>
+	        <code>}</code>
+			</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="ReferenceCounting"><div>
+		<section>
+			<header>
+				<h2>Reference Counting</h2>
+			</header>
+			<pre class="s-12">
+			<code>var count = post.comments.length,</code>
+			<code>    comments = [];</code>
+			<code>post.comments.forEach(fetchComment);</code>
+			<code> </code>
+			<code>function fetchComment(commentId) {</code>
+			<code>    comments.find({ id: commentId }, addToComments);</code>
+			<code>}</code>
+			<code> </code>
+			<code>function addToComments(err, result) {</code>
+			<code>    if (err) throw err;</code>
+			<code>    comments.push(result);</code>
+			<code>    if (--count === 0) next();</code>
+			<code>}</code>
+			<code> </code>
+			<code>function next() {</code>
+			<code>    /* do stuff with comments */</code>
+			<code>}</code>
+			</pre>
+		</section>
+	</div></div>
+	<!--
+	<div class="slide" id="OrderedList"><div>
+		<section>
+			<header>
+				<h2>Ordered List</h2>
+			</header>
+			<ol>
+				<li>Note that use of this tool</li>
+				<li>Erase your hard drive.</li>
+				<li>May or may not crash your browser
+					<ul>
+						<li>This tool is provided</li>
+						<li>Or much in the way of explanation</li>
+						<li>Without warranty, guarantee</li>
+					</ul>
+				</li>
+				<li>Lock up your machine</li>
+			</ol>
+		</section>
+	</div></div>
+	<div class="slide" id="InTheMiddle"><div>
+		<section>
+			<header>
+				<h2>In the Middle</h2>
+			</header>
+			<object data="pictures/shower.svg" type="image/svg+xml" width="256" height="256" class="middle"></object>
+		</section>
+	</div></div>
+	<div class="slide" id="Picture"><div>
+		<section>
+			<header>
+				<h2>Picture</h2>
+			</header>
+		</section>
+	</div></div>
+	<div class="slide" id="CodeSample"><div>
+		<section>
+			<header>
+				<h2>Code Sample</h2>
+			</header>
+			<pre>
+				<code>&lt;html lang="en-US"&gt;</code>
+				<code><mark>&lt;head&gt;</mark></code>
+				<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
+				<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
+				<code>    &lt;link rel="stylesheet" href="s/screen.css"&gt;</code>
+				<code>    &lt;script src="j/jquery.js"&gt;&lt;/script&gt;</code>
+				<code><mark>&lt;/head&gt;</mark></code>
+			</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="CodeNotes"><div>
+		<section>
+			<header>
+				<h2>Code Notes</h2>
+			</header>
+			<pre>
+				<code><mark>&lt;html</mark> lang="en-US"&gt;</code>
+			</pre>
+			<p class="note">May or may not crash your browser</p>
+			<pre>
+				<code><mark>&lt;meta</mark> charset="<mark>UTF-8</mark>"&gt;</code>
+			</pre>
+			<p class="note">Lock up your machine</p>
+		</section>
+	</div></div>
+	<div class="slide shout" id="Shout"><div>
+		<section>
+			<header>
+				<h2>Warning<br>Message</h2>
+			</header>
+		</section>
+	</div></div>
+	<div class="slide shout" id="Demo"><div>
+		<section>
+			<header>
+				<h2><a href="examples/index.htm" target="_blank">Demo</a></h2>
+			</header>
+		</section>
+	</div></div>
+	<div class="slide" id="BlockQuote"><div>
+		<section>
+			<header>
+				<h2>Block Quote</h2>
+			</header>
+			<blockquote cite="Anonymous">
+				<p>This tool is provided without warranty, guarantee, or much in the way of explanation. Note that use of this tool may or may not crash your browser, lock up your machine, erase your hard drive.</p>
+			</blockquote>
+		</section>
+	</div></div>
+	<div class="slide" id="InnerNavigation"><div>
+		<section>
+			<header>
+				<h2>Inner Navigation</h2>
+			</header>
+			<ol class="inner">
+				<li class="active">This tool is provided</li>
+				<li>Without warranty, guarantee</li>
+				<li>Or much in the way of explanation
+				<li>Erase your hard drive.</li>
+			</ol>
+		</section>
+	</div></div>
+	<div class="slide" id="ThankYou"><div>
+		<section>
+			<header>
+				<h2>Shower Presentation Template</h2>
+			</header>
+			<p>Vadim Makeev, Opera Software</p>
+			<ul>
+				<li><a href="http://pepelsbey.net">pepelsbey.net</a></li>
+				<li><a href="http://twitter.com/pepelsbey">twitter.com/pepelsbey</a></li>
+				<li><a href="mailto:pepelsbey@gmail.com">pepelsbey@gmail.com</a></li>
+			</ul>
+			<p>Shower: <a href="http://github.com/pepelsbey/shower">github.com/pepelsbey/shower</a></p>
+		</section>
+	</div></div>
+	-->
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="scripts/script.js"></script>
+	<!-- Copyright © 2010–2011 Vadim Makeev, http://pepelsbey.net/ -->
+</body>
+</html>
