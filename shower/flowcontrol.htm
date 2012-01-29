@@ -18,7 +18,7 @@
 		<h1>FlowControl</h1>
 		<p>Raynos, <a href="https://github.com/Raynos/">github</a></p>
 	</header>
-	<div class="slide" id="Cover"><div>
+	<div class="slide" id="OpeningSlide"><div>
 		<section>
 			<header>
 				<h2>Flow Control</h2>
@@ -44,16 +44,16 @@
 			<header>
 				<h2>Named functions</h2>
 			</header>
-			<pre class="s-14">
-			<code>articlesCollection.find({}, { 'sort':[['title', 1]] }, iterateCursors);</code>
+			<pre class="s-18">
+			<code>articlesCollection.find({}, { 'sort':[['title', 1]] }, <mark>iterateCursors</mark>);</code>
 			<code> </code>
-			<code>function iterateCursors(err, cursor) {</code>
-            <code>    cursor.each(logArticle);</code>
+			<code>function <mark>iterateCursors</mark>(err, cursor) {</code>
+            <code>    cursor.each(<mark>logArticle</mark>);</code>
             <code>});</code>
             <code> </code>
-            <code>function logArticle(err, article) {</code>
+            <code>function <mark>logArticle</mark>(err, article) {</code>
 	        <code>    if(article != null) {</code>
-	        <code>        console.log("[" + article.title + "]:[" + article.body + "]:[" + article.author_id.toHexString() + "]");</code>
+	        <code>        console.log("[" + article.title + "]");</code>
 	        <code>        console.log(">> Closing connection");</code>
 	        <code>        db.close();</code>
 	        <code>    }</code>
@@ -66,8 +66,8 @@
 			<header>
 				<h2>Reference Counting</h2>
 			</header>
-			<pre class="s-12">
-			<code>var count = post.comments.length,</code>
+			<pre class="s-14">
+			<code>var <mark>count = post.comments.length</mark>,</code>
 			<code>    comments = [];</code>
 			<code>post.comments.forEach(fetchComment);</code>
 			<code> </code>
@@ -78,7 +78,7 @@
 			<code>function addToComments(err, result) {</code>
 			<code>    if (err) throw err;</code>
 			<code>    comments.push(result);</code>
-			<code>    if (--count === 0) next();</code>
+			<code>    <mark>if (--count === 0) next();</mark></code>
 			<code>}</code>
 			<code> </code>
 			<code>function next() {</code>
@@ -87,19 +87,19 @@
 			</pre>
 		</section>
 	</div></div>
-	<div class="slide" id="next functions"><div>
+	<div class="slide" id="next-functions"><div>
 		<section>
 			<header>
 				<h2>Next functions</h2>
 			</header>
-			<pre class="s-14">
+			<pre class="s-18">
 			<code>(function next() {</code>
 			<code>    var task = stack.shift();</code>
 			<code>    task && task(someData, proxy);</code>
 			<code> </code>
 			<code>    function proxy(result) {</code>
 			<code>        /* do something with result */</code>
-			<code>        loop();</code>
+			<code>        <mark>loop();</mark></code>
 			<code>     }</code>
 			<code>}());</code>
 			</pre>
@@ -123,12 +123,12 @@
 			<header>
 				<h2>After</h2>
 			</header>
-			<pre class="s-14">
-				<code>var next = after(arr.count, finished);</code>
+			<pre class="s-18">
+				<code><mark>var next = after(arr.count, finished);</mark></code>
 				<code>arr.forEach(doSomethingAsync);</code>
 				<code> </code>
 				<code>function doSomethingAsync(item) {</code>
-				<code>    somethingAsync(item, next);</code>
+				<code>    somethingAsync(item, <mark>next</mark>);</code>
 				<code>}</code>
 				<code> </code>
 				<code>function finished() {</code>
@@ -144,45 +144,51 @@
 			<header>
 				<h2>Modifying the count</h2>
 			</header>
-			<pre class="s-10">
+			<pre class="s-12">
 			    <code>var files = [],</code>
-			    <code>    next = after(1, finished);</code>
+			    <code>    <mark>next = after(1, finished);</mark></code>
 			    <code>fs.readdir(somePath, readFolder);</code>
 			    <code> </code>
 				<code>function readFolder(err, files) {</code>
 				<code>    fs.readdir(loc, function (err, files) {</code>
-				<code>        next.count += files.length;</code>
+				<code>        <mark>next.count += files.length;</mark></code>
 				<code>        files.forEach(function (file) {</code>
 				<code>            var filePath = path.join(loc, file);</code>
 				<code>            isFile(file) ? fs.readFile(filePath, readFile) : fs.readdir(filePath, readFolder);</code>
 				<code>        });</code>
-				<code>        next.count--;</code>
+				<code>        <mark>next.count--;</mark></code>
 				<code>    });</code>
 				<code>}</code>
 				<code> </code>
 				<code>function readFile(err, file) {</code>
 				<code>    files.push(file);</code>
-				<code>    next();</code>
+				<code>    <mark>next();</mark></code>
 				<code>}</code>
 			</pre>
 		</section>
 	</div></div>
-	<!--
-	<div class="slide" id="CodeNotes"><div>
+	<div class="slide" id="Set iterations"><div>
 		<section>
 			<header>
-				<h2>Code Notes</h2>
+				<h2>Set Iterations</h2>
 			</header>
-			<pre>
-				<code><mark>&lt;html</mark> lang="en-US"&gt;</code>
+			<pre class="s-18">
+				<code><mark>after.map</mark>(post.comments, mapToComment, finished);</code>
+				<code> </code>
+				<code>function mapToComment(value, callback) {</code>
+				<code>    comments.find({ id: value }, <mark>callback</mark>);</code>
+				<code>}</code>
+				<code> </code>
+				<code>function finished(err, comments) {</code>
+				<code>    /* do stuff with comments */</code>
+				<code>}</code>
 			</pre>
-			<p class="note">May or may not crash your browser</p>
-			<pre>
-				<code><mark>&lt;meta</mark> charset="<mark>UTF-8</mark>"&gt;</code>
-			</pre>
-			<p class="note">Lock up your machine</p>
+			<p> Set iterations allow you to do something with a value in parallel.
+			This is a great sugar tool
+			</p>
 		</section>
 	</div></div>
+	<!--
 	<div class="slide shout" id="Shout"><div>
 		<section>
 			<header>
