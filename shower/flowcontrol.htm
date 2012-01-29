@@ -87,34 +87,38 @@
 			</pre>
 		</section>
 	</div></div>
+	<div class="slide" id="next functions"><div>
+		<section>
+			<header>
+				<h2>Next functions</h2>
+			</header>
+			<pre class="s-14">
+			<code>(function next() {</code>
+			<code>    var task = stack.shift();</code>
+			<code>    task && task(someData, proxy);</code>
+			<code> </code>
+			<code>    function proxy(result) {</code>
+			<code>        /* do something with result */</code>
+			<code>        loop();</code>
+			<code>     }</code>
+			<code>}());</code>
+			</pre>
+			<a href="https://github.com/senchalabs/connect/blob/master/lib/proto.js#L106" target="_blank">Technique used by TJ in connect</a>
+		</section>
+	</div></div>
+	<div class="slide" id="Abstractions"><div>
+		<section>
+			<header>
+				<h2>Flow control abstractions</h2>
+			</header>
+			<ul>
+				<li><a href="https://github.com/Raynos/after.js" target="_blank"> After </a></li>
+				<li><a href="https://github.com/Raynos/after.js#after.forEach" target="_blank"> Set Operations </a></li>
+				<li><a href="https://github.com/Raynos/stak" target="_blank"> Stacks </a></li>
+			</ul>
+		</section>
+	</div></div>
 	<!--
-	<div class="slide" id="OrderedList"><div>
-		<section>
-			<header>
-				<h2>Ordered List</h2>
-			</header>
-			<ol>
-				<li>Note that use of this tool</li>
-				<li>Erase your hard drive.</li>
-				<li>May or may not crash your browser
-					<ul>
-						<li>This tool is provided</li>
-						<li>Or much in the way of explanation</li>
-						<li>Without warranty, guarantee</li>
-					</ul>
-				</li>
-				<li>Lock up your machine</li>
-			</ol>
-		</section>
-	</div></div>
-	<div class="slide" id="InTheMiddle"><div>
-		<section>
-			<header>
-				<h2>In the Middle</h2>
-			</header>
-			<object data="pictures/shower.svg" type="image/svg+xml" width="256" height="256" class="middle"></object>
-		</section>
-	</div></div>
 	<div class="slide" id="Picture"><div>
 		<section>
 			<header>
