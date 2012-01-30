@@ -58,6 +58,7 @@
 				<li> Named functions </li>
 				<li> Reference counting </li>
 				<li> next functions </li>
+				<li> event emitters </li>
 			</ul>
 		</section>
 	</div></div>
@@ -126,6 +127,25 @@
 			<code>}());</code>
 			</pre>
 			<a href="https://github.com/senchalabs/connect/blob/master/lib/proto.js#L106" target="_blank">Technique used by TJ in connect</a>
+		</section>
+	</div></div>
+	<div class="slide" id="eventemitters"><div>
+		<section>
+			<header>
+				<h2>Event emitters</h2>
+			</header>
+			<pre class="s-18">
+			<code>var req = http.request(options);</code>
+			<code><mark>req.on</mark>("response", function (res) {</code>
+			<code>    <mark>res.on</mark>("data", function (chunk) {</code>
+			<code>        console.log("BODY: " + chunk);</code>
+			<code>    })</code>
+			<code>});</code>
+			<code><mark>req.on</mark>("error", function (error) {</code>
+			<code>    console.log("oops: ", error);</code>
+			<code>});</code>
+			<code>req.end();</code>
+			</pre>
 		</section>
 	</div></div>
 	<div class="slide" id="Abstractions"><div>
@@ -245,23 +265,25 @@
 				<h2>Open source alternatives</h2>
 			</header>
 			<ul>
+				<li><a href="https://github.com/Raynos/after.js" target="_blank">After</a> and <a href="https://github.com/Raynos/stak" target="_blank">Stak</a></li>
 				<li><a href="https://github.com/creationix/step" target="_blank">Step</a></li>
 				<li><a href="https://github.com/caolan/async" target="_blank">async</a></li>
-				<li><a href="https://github.com/coolaj86/futures" target="_blank">Futures</a></li>
+				<li><a href="https://github.com/coolaj86/futures" target="_blank">Futures</a> and <a href="https://github.com/kriskowal/q" target="_blank"> Q </a></li>
+				<li> <a href="https://github.com/maxtaco/tamejs" target="_blank">Tame</a> / <a href="https://github.com/laverdet/node-fibers" target="_blank" > Fibers </a> / <a href="https://github.com/Sage/streamlinejs" target="_blank"> streamline </a></li>
+				<li> More control flow libraries from the <a href="http://toolbox.no.de/categories/Control%20Flow" target="_blank">
+				node toolbox </a></li>
 			</ul>
 		</section>
 	</div></div>
-	<!--
-	<div class="slide" id="BlockQuote"><div>
+	<div class="slide" id="Questions"><div>
 		<section>
 			<header>
-				<h2>Block Quote</h2>
+				<h2>Questions</h2>
 			</header>
-			<blockquote cite="Anonymous">
-				<p>This tool is provided without warranty, guarantee, or much in the way of explanation. Note that use of this tool may or may not crash your browser, lock up your machine, erase your hard drive.</p>
-			</blockquote>
+			<h3> Question time, Audience Go! </h3>
 		</section>
 	</div></div>
+	<!--
 	<div class="slide" id="InnerNavigation"><div>
 		<section>
 			<header>
