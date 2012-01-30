@@ -115,7 +115,7 @@
 				<h2>Next functions</h2>
 			</header>
 			<pre class="s-18">
-			<code>(function next() {</code>
+			<code>(function loop() {</code>
 			<code>    var task = stack.shift();</code>
 			<code>    task && task(someData, proxy);</code>
 			<code> </code>
@@ -210,21 +210,48 @@
 			</p>
 		</section>
 	</div></div>
+	<div class="slide" id="Stacks"><div>
+		<section>
+			<header>
+				<h2>Stacks</h2>
+			</header>
+			<pre class="s-12">
+				<code>var fs = require("fs"),</code>
+				<code>    exec = require("child_process").exec,</code>
+				<code>    after = require("after"),</code>
+				<code>    <mark>stack</mark> = Stak.make(function () {</code>
+				<code>        exec('whoami', this.next);</code>
+				<code>    }, function () {</code>
+				<code>        <mark>var next = after(2, this.next);</mark></code>
+				<code>        exec('groups', function (err, groups) {</code>
+				<code>            next("groups", groups);</code>
+				<code>        });</code>
+				<code>        fs.readFile(this.file, 'ascii', function (err, file) {</code>
+				<code>            next("file", file);</code>
+				<code>        });</code>
+				<code>    }, function () {</code>
+				<code>        var data = <mark>after.unpack(arguments);</mark></code>
+				<code>        console.log("Groups : ", data.groups.trim());</code>
+				<code>        console.log("This file has " data.file.length + " bytes");</code>
+				<code>    });</code>
+				<code> </code>
+				<code><mark>stack.handle({ file: __filename });</mark></code>
+			</pre>
+		</section>
+	</div></div>
+	<div class="slide" id="Alternatives"><div>
+		<section>
+			<header>
+				<h2>Open source alternatives</h2>
+			</header>
+			<ul>
+				<li><a href="https://github.com/creationix/step" target="_blank">Step</a></li>
+				<li><a href="https://github.com/caolan/async" target="_blank">async</a></li>
+				<li><a href="https://github.com/coolaj86/futures" target="_blank">Futures</a></li>
+			</ul>
+		</section>
+	</div></div>
 	<!--
-	<div class="slide shout" id="Shout"><div>
-		<section>
-			<header>
-				<h2>Warning<br>Message</h2>
-			</header>
-		</section>
-	</div></div>
-	<div class="slide shout" id="Demo"><div>
-		<section>
-			<header>
-				<h2><a href="examples/index.htm" target="_blank">Demo</a></h2>
-			</header>
-		</section>
-	</div></div>
 	<div class="slide" id="BlockQuote"><div>
 		<section>
 			<header>
