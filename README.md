@@ -6,5 +6,5 @@ A bunch of presentations
 
 ## [View them][1]
 
-  [1]: http://google.com
+  [1]: https://raynos.github.com/presentation
   [2]: https://github.com/pepelsbey/shower
