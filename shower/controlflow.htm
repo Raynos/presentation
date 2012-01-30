@@ -102,7 +102,7 @@
 				<li> event emitters </li>
 			</ul>
 		</section>
-		<section class="hidden s-18">
+		<section class="hidden s-16">
 			<p> There are multiple times of primitives for flow control. The idea of a primitive is that it's a simple tool that stops you from getting into callback hell. It's a code organization tool </p>
 
 			<p> Named functions allow you to use function declarations and extract those inline anonymous functions into external functions. This flattens your callback hierachy and avoids the pyramid of doom </p>
@@ -110,6 +110,8 @@
 			<p> Reference counting allows you to call a continuation callback after n asynchronous tasks have finished. This means you can run n asynchronous tasks in parallel and continue after they have all finished </p>
 
 			<p> next functions is the concept of having a list of functions and having a single next function which calls the first function in the list and passes itself in. This allows you to run a function and that function can then say "Ok I'm done, call the next function in the list". It's a method for serial programming </p>
+
+			<p> Event emitters give you a way of listening on something. Say you want to be notified when x happens, you can do that if x exposes an event emitter and an event you can listen on. This means that rather then saying "do y then tell me". You can say "if you ever do y, then tell me" </p>
 		</section>
 	</div></div>
 	<div class="slide" id="NamedFunctions"><div>
@@ -133,6 +135,15 @@
 	        <code>}</code>
 			</pre>
 		</section>
+		<section class="hidden">
+			<p> Named functions basically envolves turning all your anonymous functions into function declarations. This means there is now only one of your function and you don't create a new one whenever you call the function </p>
+
+			<p> it also means you can move the function into an outer scope thus reducing nesting </p>
+
+			<p> So rather then indenting your functions directly we take the inline function out, give it a name and put it in a higher scope </p>
+
+			<p> But, can anyone see the problem with this code? </p>
+		</section>
 	</div></div>
 	<div class="slide" id="Closures"><div>
 		<section>
@@ -146,6 +157,17 @@
 				<li> Put similar functions on an object </li>
 				<li> <a href="https://github.com/Raynos/pd#pd.bindAll" target="_blank"> pd.bindAll </a> </li>
 			</ul>
+		</section>
+		<section class="hidden s-14">
+			<p> closures can cause you problems with your code. If you store state in your closure well then you can't just refactor your inline function into a function declaration becuase it needs that data </p>
+
+			<p> This means every function that needs the data has to be created inside your outer function. This can quickly get out of control not to mention it makes memory leaks easier </p>
+
+			<p> There are a few alternatives to having data stored in a closure. One of them is to use bind to curry data into a callback. However bind returns a new function so this has a performance penalty </p>
+
+			<p> An obvouis solution is to just pass data to your function, but this means you can't pass your functions to someone elses API. You have to wrap that and call your own function with the extra data passed in. This is actually the same as binding because your creating a new function </p>
+
+			<p> An alternative solution is to put all your similar functions on an object and bind all those functions to the object. Then just store the data on `this` and pass your callbacks around by `this.foo`. This works nicely because all callbacks always have access to the data through `this` and they are nicely organized on an object, plus you can pass the functions directly to external APIs </p>
 		</section>
 	</div></div>
 	<div class="slide" id="ReferenceCounting"><div>
@@ -345,6 +367,7 @@
 				<h2>Questions</h2>
 			</header>
 			<h3> Question time, Audience Go! </h3>
+			<a href="https://github.com/Raynos/presentation/blob/master/shower/x.js" target="_blank"> Rewrote the mongodb blog example using stak </a>
 		</section>
 	</div></div>
 	<!--
