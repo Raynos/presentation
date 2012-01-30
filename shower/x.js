@@ -183,3 +183,7 @@ var articleStack = Stak.make(
         this.db.close();
     }
 );
+
+console.log("Connecting to " + host + ":" + port);
+var db = new Db('node-mongo-blog', new Server(host, port, {}), {native_parser:true});
+dbStack.handle({ db: db });
