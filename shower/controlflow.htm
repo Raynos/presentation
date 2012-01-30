@@ -102,10 +102,14 @@
 				<li> event emitters </li>
 			</ul>
 		</section>
-		<section class="hidden">
+		<section class="hidden s-18">
 			<p> There are multiple times of primitives for flow control. The idea of a primitive is that it's a simple tool that stops you from getting into callback hell. It's a code organization tool </p>
 
 			<p> Named functions allow you to use function declarations and extract those inline anonymous functions into external functions. This flattens your callback hierachy and avoids the pyramid of doom </p>
+
+			<p> Reference counting allows you to call a continuation callback after n asynchronous tasks have finished. This means you can run n asynchronous tasks in parallel and continue after they have all finished </p>
+
+			<p> next functions is the concept of having a list of functions and having a single next function which calls the first function in the list and passes itself in. This allows you to run a function and that function can then say "Ok I'm done, call the next function in the list". It's a method for serial programming </p>
 		</section>
 	</div></div>
 	<div class="slide" id="NamedFunctions"><div>
