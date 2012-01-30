@@ -12,6 +12,20 @@ BODY {
 	counter-reset:paging;
 	}
 
+.full .notes-button {
+	position: absolute;
+	top: 520px;
+	right: 120px;
+	z-index: 99;
+	}
+.notes-button:hover {
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
 /* Slide
 ---------------------------------------- */
 .slide:after {
@@ -33,7 +47,6 @@ BODY {
 		height:120px;
 		content:'';
 		}
-
 /* Header */
 .slide HEADER {
 	margin:0 0 28px;
@@ -140,19 +153,19 @@ BODY {
 	white-space:normal;
 	}
 
-	.slide PRE.s-12 CODE {
+	.s-12 {
 		font-size: 12px;
 		}
-	.slide PRE.s-14 CODE {
+	.s-14 {
 		font-size: 14px;
 		}
-	.slide PRE.s-10 CODE {
+	.s-10 {
 		font-size: 10px;
 		}
-	.slide PRE.s-16 CODE {
+	.s-16 {
 		font-size: 16px;
 		}
-	.slide PRE.s-18 CODE {
+	.s-18 {
 		font-size: 18px;
 		}
 	.slide PRE CODE {

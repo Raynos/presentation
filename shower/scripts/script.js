@@ -139,6 +139,31 @@
 		}
 	}
 
+	function toggleNotes() {
+		var text = this.textContent;
+		if (text.indexOf("off") > -1) {
+			this.textContent = "notes: on";
+			slides.forEach(function (slide) {
+				var section = slide.firstElementChild.children[0],
+					div = slide.firstElementChild.children[1];
+
+				section.style.display = "none";
+				div && (div.style.display = "block");
+			});
+			localStorage.setItem("notes", true);
+		} else if (text.indexOf("on") > -1) {
+			this.textContent = "notes: off";
+			slides.forEach(function (slide) {
+				var section = slide.firstElementChild.children[0],
+					div = slide.firstElementChild.children[1];
+
+				section.style.display = "block";
+				div && (div.style.display = "none");
+			});
+			localStorage.setItem("notes", "");
+		}
+	}
+
 	// Event handlers
 
 	window.addEventListener('DOMContentLoaded', function () {
@@ -274,5 +299,17 @@
 			e.preventDefault();
 		}
 	}, false);
+
+	slides = [].slice.call(slides)
+
+
+	var notes = localStorage.getItem("notes"),
+		notesButton = document.getElementById("notes-button");
+
+	if (notes) {
+		toggleNotes.call(notesButton);
+	}
+
+	notesButton.addEventListener("click", toggleNotes, false);
 
 }());

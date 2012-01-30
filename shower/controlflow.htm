@@ -18,6 +18,9 @@
 		<h1>Control Flow</h1>
 		<p>Raynos, <a href="https://github.com/Raynos/">github</a></p>
 	</header>
+	<div id="notes-button" class="notes-button">
+		notes: off
+	</div>
 	<div class="slide" id="OpeningSlide"><div>
 		<section>
 			<header>
@@ -25,6 +28,35 @@
 			</header>
 			<p> Control Flow are techniques for managing asynchronous code. </p>
 			<p><a href="https://github.com/christkv/node-mongodb-native/blob/master/examples/blog.js#L67" target="_blank">Why you want flow control </a></p>
+		</section>
+		<section class="hidden">
+			<p> Control flow is all about having techniques to handle how you write your code and how your code goes from a to b. Normally when people come to node.js one of the big complaints they have is "Dear god spaghetti callback hell". </p>
+
+			<p> The way node.js handles continuations with callbacks makes it far too easy to nest. Every time you do anything asynchronous with an anonymous callback you will indent your code </p>
+		</div>
+	</div></div>
+	<div class="slide" id="Example"><div>
+		<section>
+			<header>
+				<h2>A simple task - Showing a blog post</h2>
+			</header>
+			<ul>
+				<li>Open a database connection</li>
+				<li>Get the blog collection</li>
+				<li>Get the blog post</li>
+				<li>get the author collection</li>
+				<li>get the author data</li>
+				<li>Get the comments collection</li>
+				<li>Get the user collection</li>
+				<li>Iterate over comments</li>
+				<li>Get each comment from the database</li>
+				<li>Get the user data for each comment</li>
+			</ul>
+		</section>
+		<section class="hidden">
+			<p> So we want to do a simple task. All you have to do is get a blog post out of the database. That shouldn't be hard right? </p>
+
+			<p> Well each one of those tasks leads to having a new callback. And for each new callback your going to get another layer of indenting. Welcome to callback hell </p>
 		</section>
 	</div></div>
 	<div class="slide" id="PyramidOfDoom"><div>
@@ -48,6 +80,15 @@
 			<code>});</code>
 			</pre>
 		</section>
+		<section class="hidden s-18">
+			<p> The code would literally look like this. Except we are going to have 10 levels of indenting because we did asynchronous tasks. And all that just to load a blog post on a page. </p>
+
+			<p> We need to do some real flow control for even the trivial tasks. *Go back to first slide*. If we look at the example of a blog engine using mongodb. You can see 16 levels of indentation. I don't know what you think, but I think that's pretty crazy </p>
+
+			<p> What's wrong with it? Well firstly I don't like reading horizontally. Secondly you have closures and inline functions everywhere. And every time you call the function your making a new function. This opens you up to memory leaks and it's just expensive. </p>
+
+			<p> My personal style guide says you should in indent three times per function. That's one inner function, a loop and an if. Doing this helps readability and maintainability. </p>
+		</section>
 	</div></div>
 	<div class="slide" id="Primitives"><div>
 		<section>
@@ -60,6 +101,11 @@
 				<li> next functions </li>
 				<li> event emitters </li>
 			</ul>
+		</section>
+		<section class="hidden">
+			<p> There are multiple times of primitives for flow control. The idea of a primitive is that it's a simple tool that stops you from getting into callback hell. It's a code organization tool </p>
+
+			<p> Named functions allow you to use function declarations and extract those inline anonymous functions into external functions. This flattens your callback hierachy and avoids the pyramid of doom </p>
 		</section>
 	</div></div>
 	<div class="slide" id="NamedFunctions"><div>

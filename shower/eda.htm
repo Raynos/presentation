@@ -22,35 +22,32 @@
     <div class="slide" id="OpeningSlide"><div>
         <section>
             <header>
-                <h2>Control Flow</h2>
+                <h2>EDA</h2>
             </header>
-            <p> Control Flow are techniques for managing asynchronous code. </p>
-            <p><a href="https://github.com/christkv/node-mongodb-native/blob/master/examples/blog.js#L67" target="_blank">Why you want flow control </a></p>
+            <p> EDA is <a href="http://en.wikipedia.org/wiki/Event-driven_architecture" target="_blank">Event Driven Arhictecture</a>. This means using events to
+            <ul>
+                <li>store your data</li>
+                <li>communicate between modules</li>
+                <li>talk between clients and servers</li>
+            </ul>
         </section>
     </div></div>
-    <!--
-    <div class="slide" id="PyramidOfDoom"><div>
+    <div class="slide" id="EventEmitters"><div>
         <section>
             <header>
-                <h2>Pyramid Of Doom</h2>
+                <h2>Event Emitters</h2>
             </header>
-            <pre class="s-16">
-            <code>step1(function (value1) {</code>
-            <code><mark>    </mark>step2(function (value2) {</code>
-            <code><mark>        </mark>step3(function (value3) {</code>
-            <code><mark>            </mark>step4(function (value4) {</code>
-            <code><mark>                </mark>step5(function (value5) {</code>
-            <code><mark>                    </mark>step6(function (value6) {</code>
-            <code><mark>                        </mark>// Do something with value6</code>
-            <code><mark>                    </mark>});</code>
-            <code><mark>                </mark>});</code>
-            <code><mark>            </mark>});</code>
-            <code><mark>        </mark>});</code>
-            <code><mark>    </mark>});</code>
-            <code>});</code>
+            <pre class="s-18">
+            <code>var EventEmitter = require("events").EventEmitter.prototype</code>
+            <code>var <mark>emitter</mark> = Object.create(EventEmitter)</code>
+            <code>emitter.<mark>on</mark>("foo", <mark>consumer1</mark>.handleFoo);</code>
+            <code>emitter.on("foo", consumer2.handleFoo);</code>
+            <code>emitter.on("bar", consumer3.handleBar);</code>
+            <code>emitter.<mark>emit</mark>("bar", data);</code>
             </pre>
         </section>
     </div></div>
+    <!--
     <div class="slide" id="Primitives"><div>
         <section>
             <header>
