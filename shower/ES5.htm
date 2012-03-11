@@ -127,13 +127,14 @@
             <header>
                 <h2> Benefits of Strict mode </h2>
             </header>
-            <ul>
-                <li>foo = bar fails if foo doesn't exist</li>
-                <li>this === undefined inside functions</li>
-                <li>assignment to read only properties fails</li>
-                <li>with is banned</li>
-                <li>eval is limited</li>
-            </ul>
+            The following throw errors
+            <pre>
+                <code>foo <mark>=</mark> bar</code>
+                <code>(function () { this<mark>.foo</mark> = 42 })()</code>
+                <code>var bar = { get bar() { return 42 } }</code>
+                <code>bar<mark>.bar</mark> = 42</code>
+                <code><mark>with</mark>(foo) { }</code>
+            </pre>
             <p> Bonus: Function declarations inside blocks are syntax errors </p>
         </section>
         <section class="hidden s-14">
@@ -157,8 +158,8 @@
             <header>
                 <h2> We don't use globals </h2>
             </header>
-            <p> Your JavaScript applications use zero globals. Global variables are ugly and not needed </p>
-            <p> The only globals you touch are those exposed by the host environment, window, document, etc </p>
+            <p> Globals are bad</p>
+            <p> Don't create new ones </p>
         </section>
         <section class="hidden">
             <p> A quick aside on global variables in JavaScript, you don't need them. Seriously. </p>
