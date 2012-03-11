@@ -8,14 +8,14 @@
 @import url(reset.css);
 
 BODY {
-	font:25px/1.8 'PT Sans', sans-serif;
+	font:30px/1.8 'PT Sans', sans-serif;
 	counter-reset:paging;
 	}
 
 .full .notes-button {
 	position: absolute;
-	top: 520px;
-	right: 120px;
+	bottom: 35px;
+	right: 30px;
 	z-index: 99;
 	}
 .notes-button:hover {
@@ -24,6 +24,7 @@ BODY {
 
 .hidden {
 	display: none;
+	font-size: 20px;
 }
 
 /* Slide
@@ -56,7 +57,7 @@ BODY {
 
 /* Elements */
 .slide P {
-	margin:0 0 45px;
+	margin:0 0 1em;
 	}
 .slide P.note {
 	color:#888;
@@ -381,8 +382,8 @@ BODY {
 			}
 		.full .slide:after {
 			position:absolute;
-			bottom:85px;
-			left:120px;
+			bottom:15px;
+			left:15px;
 			color:#BBB;
 			line-height:1;
 			}
@@ -418,7 +419,7 @@ BODY {
 .full .progress {
 	position:absolute;
 	right:118px;
-	bottom:49px;
+	bottom:19px;
 	left:118px;
 	border-radius:7px;
 	border:2px solid rgba(255, 255, 255, 0.2);

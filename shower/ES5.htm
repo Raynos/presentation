@@ -33,13 +33,13 @@
                 <li><a href="https://github.com/kriskowal/es5-shim" target="_blank">ES5 shim </a></li>
             </ul>
         </section>
-        <section class="hidden s-18">
+        <section class="hidden">
             <p> ES5 is the latest version of ECMAScript, released in 2009. Today's talk will be mostly focused on what are the good parts of ES5.
 
             Basically which parts of ES5 should you be using today and which parts of the older specifications (ES3) should you stop using </p>
-            <p> In terms of browser support, you can check the support matrix and you will find that all modern browsers support everything but strict mode (and Function#bind for safari).
+            <p> In terms of browser support, you can check the support matrix and you will find that all modern browsers support everything but strict mode (and Function#bind for safari). 
 
-            For legacy browsers you can use the ES5 shim which allows you to use ES5 everywhere as long as you avoid the unshimmable subset. Personally I don't include anything that's unshimmable in the good parts of ES5 </p>
+            For legacy browsers you can use the ES5 shim which allows you to use ES5 everywhere as long as you avoid the unshimmable subset. Personally I don't include anything that's unshimmable in the good parts of ES5. Throughout the presentation, unless mentioned otherwise the ES5 features work with the shim </p>
             <p> This talk is arranged in a random order </p>
         </div>
     </div></div>
@@ -50,16 +50,16 @@
             </header>
             <p> In ES5 it's valid to use reserved tokens as property names. For example: </p>
             <pre>
-            <code>var o = {</code>
-            <code>    <mark>delete</mark>: 42,</code>
-            <code>    <mark>for</mark>: 43</code>
-            <code>}</code>
+                <code>var o = {</code>
+                <code>    <mark>delete</mark>: 42,</code>
+                <code>    <mark>for</mark>: 43</code>
+                <code>}</code>
             </pre>
             <p> However this breaks in oldIE and can't be shimmed <br/>
             <strong> Verdict: Still avoid them! </strong>
             </p>
         </section>
-        <section class="hidden s-18">
+        <section class="hidden">
             <p> one of the new features of ES5 is that it's valid to have property names that are reserved words or keywords. This means you no longer have to wrap access to those words in strings (foo["delete"]). </p>
             <p> This is just a nice feature to have and doesn't really change much, we could already do this before with strings and we'll continue doing it with strings because it's not shimmable. </p>
         </section>
@@ -69,9 +69,85 @@
             <header>
                 <h2>Prototypes and Object.create</h2>
             </header>
+            <p> in ES5 </p>
+            <pre>
+                <code>var Parent = { ... }</code>
+                <code>var Child = <mark>Object.create</mark>(Parent)</code>
+            </pre>
+            <p> in ES3 </p>
+            <pre>
+                <code>var Parent = function () {}</code>
+                <code>Parent.<mark>prototype</mark> = { ... }</code>
+                <code>var Child = <mark>new</mark> Parent</code>
+            </pre>
         </section>
-        <section class="hidden s-18">
-            
+        <section class="hidden">
+            <p> One of the big advantages of using ES5 is a standard way to manipulate prototypes without having to hack it around. In ES3 we had this notion of constructor functions, the prototype property of constructor functions and the magical [[Construct]]. Which is rather confusing and ugly to say the least. </p>
+
+            <p> with ES5 it's simple, you have objects, and you can create a new object that prototypically inherits from another object. Really simple.
+            </p>
+
+            <p> The beauty of the ES5 version is that there is no cruft, there is no junk. Look, I don't need a function, I don't need the magical behaviour of [[Construct]], I don't need the trap of forgetting to invoke new. And that's not the least of it, Has anyone noticed the bug in the ES3 code? </p>
+
+            <p> I also won't mention how ugly and painful it is to chain multiple objects together with ES3 </p>
+        </section>
+    </div></div>
+    <div class="slide" id="Enumeration"><div>
+        <section>
+            <header>
+                <h2> Enumeration and prototypes </h2>
+            </header>
+            in ES5
+            <pre>
+                <code><mark>Object.keys</mark>(obj).<mark>forEach</mark>(function (key) {</code>
+                <code>    ...</code>
+                <code>})</code>
+            </pre>
+            in ES3
+            <pre>
+                <code>for (var key in obj) {</code>
+                <code>    if (obj.<mark>hasOwnProperty</mark>(key)) { ... }</code>
+                <code>}</code>
+            </pre>
+        </section>
+        <section class="hidden">
+            <p> Who can identify the trap with enumeration </p>
+
+            <p> When doing enumeration over the properties in ES3 you would normally fall in to the trap of picking up properties from the prototype. This trap has become less common thanks to the [[Enumerable]] property </p>
+
+            <p> Still if you were to add a property to say, Object.prototype then all enumerations over all objects would pick up that property. To avoid this we used to use Object.prototype.hasOwnProperty checks in ES3. However we now have ES5 and Object.keys so we no longer need to do this. </p>
+
+            <p> Object.keys returns an array of all own, enumerable properties. You can then iterate over that array, it should be noted that using Object.keys is significantly faster then filtering with hasOwnProperty </p>
+        </section>
+    </div></div>
+    <div class="slide" id="Strict mode"><div>
+        <section>
+            <header>
+                <h2> Benefits of Strict mode </h2>
+            </header>
+            <ul>
+                <li>foo = bar fails if foo doesn't exist</li>
+                <li>this === undefined inside functions</li>
+                <li>assignment to read only properties fails</li>
+                <li>with is banned</li>
+                <li>eval is limited</li>
+            </ul>
+            <p> Bonus: Function declarations inside blocks are syntax errors </p>
+        </section>
+        <section class="hidden s-14">
+            <p> All I have to say about strict mode is use it, seriously. There is no reason not to. </p>
+
+            <p> It should be noted that strict mode doesn't do anything on legacy browsers. This is a non concern if you test your code on at least one browser that supports strict mode. And that's easy to do, you take that massive testing suite with 100% code coverage and run it on a modern browser like Chrome or FF. This ensures that strict mode doesn't fail on you in modern browsers, because you tested it </p>
+
+            <p> So let's talk about some of the features of using strict mode. The trap of forgetting var disappears. Now when you forget to declare a variable, assignment fails by throwing an error instead of creating a global variable. This get's rid of the biggest source of global variable leaks </p>
+
+            <p> the value of this inside functions is now a sensible undefined by default rather then the global scope. This means that assignment to this.foo inside constructor functions no longer creates global variables when you forget to invoke functions with new </p>
+
+            <p> When you assign to a readonly property it knows that the value can't be changed so it throws an exception rather then silently failing </p>
+
+            <p> with is banned and eval is limited. These are great benefits because it means that the javascript engines can be optimised due to no longer having to have special edge case mechanisms for these nasty constructs. All of these features help you debug your code and prevent errors </p>
+
+            <p> As a bonus, if a browser follows the best practice then function declarations inside blocks like if or for become syntax errors rather then nasty undefined behaviour. Another example of error prevention </p>
         </section>
     </div></div>
     <!--
