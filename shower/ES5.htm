@@ -118,6 +118,8 @@
             <p> Still if you were to add a property to say, Object.prototype then all enumerations over all objects would pick up that property. To avoid this we used to use Object.prototype.hasOwnProperty checks in ES3. However we now have ES5 and Object.keys so we no longer need to do this. </p>
 
             <p> Object.keys returns an array of all own, enumerable properties. You can then iterate over that array, it should be noted that using Object.keys is significantly faster then filtering with hasOwnProperty </p>
+
+            <p> Itt should be noted that Object.keys has a cousin called Object.getOwnPropertyNames that does the same except returns non-enumerable properties as well </p>
         </section>
     </div></div>
     <div class="slide" id="Strict mode"><div>
@@ -148,6 +150,80 @@
             <p> with is banned and eval is limited. These are great benefits because it means that the javascript engines can be optimised due to no longer having to have special edge case mechanisms for these nasty constructs. All of these features help you debug your code and prevent errors </p>
 
             <p> As a bonus, if a browser follows the best practice then function declarations inside blocks like if or for become syntax errors rather then nasty undefined behaviour. Another example of error prevention </p>
+        </section>
+    </div></div>
+    <div class="slide" id="Globals"><div>
+        <section>
+            <header>
+                <h2> We don't use globals </h2>
+            </header>
+            <p> Your JavaScript applications use zero globals. Global variables are ugly and not needed </p>
+            <p> The only globals you touch are those exposed by the host environment, window, document, etc </p>
+        </section>
+        <section class="hidden">
+            <p> A quick aside on global variables in JavaScript, you don't need them. Seriously. </p>
+            <p> It's possible to design your applications, and infrastructure libraries to not use any global variables with the aid of magic and closures </p>
+        </section>
+    </div></div>
+    <div class="slide" id="Functions"><div>
+        <section>
+            <header>
+                <h2> Function Declarations </h2>
+            </header>
+            <p> Use them. Avoid function expressions.
+            <p> Avoid <a href="http://kangax.github.com/nfe/" target="_blank"> Named function expressions </a></p>
+        </section>
+        <section class="hidden">
+            <p> A quick aside on functions. You should always favour function declarations over function expressions. </p>
+
+            <p> There are two reasons for this. When you use a function expression (not a NFE), the function doesn't have a name which hurts readability and hurts debugging. Stacktraces print the name of a function, if there is no name then stacktraces are not readable. Also adding a name to a function is a great oppurtunity to document what it is doing. This is basically writing literate code. You could use NFE for this purpose but those are buggy in oldIE so I favour using function declarations </p>
+
+            <p> Avoiding writing function expressions inline also helps you avoid nesting of your functions. Personally I like to limit my nesting to 3 indents, which is difficult if your using functions expressions everywhere </p>
+        </section>
+    </div></div>
+    <div class="slide" id="bind"><div>
+        <section>
+            <header>
+                <h2> Function.prototype.bind </h2>
+            </header>
+            <pre>
+                <code>var f = g.<mark>bind</mark>({ foo: 42 })</code>
+                <code>f()</code>
+                <code>function f() {</code>
+                <code>   console.log(this.foo === 42); // true</code>
+                <code>}</code>
+            </pre>
+        </section>
+        <section class="hidden">
+            <p> Function.prototype.bind is a method used to hard bind the thisContext of a function to a particular object. It returns a new function </p>
+
+            <p> This is a great feature (however it isn't implemented in Saf 5.1) that allows you to inject state into a function by creating a new function which has the state bound to the this variable inside it </p>
+
+            <p> this makes a good alternative to closures for storing state. Generally there are three ways to store state across multiple functions, store it in closures, store it in this or store it in the first parameter </p>
+
+            <p> Personally I recommend favouring this over closures wherever possible and using bind for this purpose. The reasons to avoid closures are that they require local functions (which increases indentation) and that they can be an easy source of memory leaks. </p>
+        </section>
+    </div></div>
+    <div class="slide" id="JSON"><div>
+        <section>
+            <header>
+                <h2> JSON </h2>
+            </header>
+            <ul>
+                <li> JSON.parse(text[, reviver]) </li>
+                <li> JSON.stringify(value[, replacer [, space]]) </li>
+                <li> .toJSON </li>
+        </section>
+        <section class="hidden">
+            <p> JSON works natively as of ES5. </p>
+
+            <p> Some features of JSON that are relatively unknown are the optional parameters. For example parse accepts reviver parameter that allows you to ignore certain properties or alter properties in the parsing process. </p>
+
+            <p> stringify has a replacer optional parameter which allows you to replace or alter values when stringifying. Alternatively rather then passing a replacer function you can pass an array which acts as a whitelist. Only the properties within the array will be stringified. </p>
+
+            <p> JSON.stringify also has an optional space parameter which allows you to pass in a space string to be used for human printing. You can basically pass in a string consisting of 2 or 4 spaces so that the JSON that is stringified is human readable </p>
+
+            <p> JSON.stringify also checks for the .toJSON property on the input, if it exists and is a function then it will call that method and stringify the result </p>
         </section>
     </div></div>
     <!--
