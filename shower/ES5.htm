@@ -40,7 +40,39 @@
             <p> In terms of browser support, you can check the support matrix and you will find that all modern browsers support everything but strict mode (and Function#bind for safari).
 
             For legacy browsers you can use the ES5 shim which allows you to use ES5 everywhere as long as you avoid the unshimmable subset. Personally I don't include anything that's unshimmable in the good parts of ES5 </p>
+            <p> This talk is arranged in a random order </p>
         </div>
+    </div></div>
+    <div class="slide" id="ReservedKeywords"><div>
+        <section>
+            <header>
+                <h2>Reserved tokens</h2>
+            </header>
+            <p> In ES5 it's valid to use reserved tokens as property names. For example: </p>
+            <pre>
+            <code>var o = {</code>
+            <code>    <mark>delete</mark>: 42,</code>
+            <code>    <mark>for</mark>: 43</code>
+            <code>}</code>
+            </pre>
+            <p> However this breaks in oldIE and can't be shimmed <br/>
+            <strong> Verdict: Still avoid them! </strong>
+            </p>
+        </section>
+        <section class="hidden s-18">
+            <p> one of the new features of ES5 is that it's valid to have property names that are reserved words or keywords. This means you no longer have to wrap access to those words in strings (foo["delete"]). </p>
+            <p> This is just a nice feature to have and doesn't really change much, we could already do this before with strings and we'll continue doing it with strings because it's not shimmable. </p>
+        </section>
+    </div></div>
+    <div class="slide" id="Prototypes"><div>
+        <section>
+            <header>
+                <h2>Prototypes and Object.create</h2>
+            </header>
+        </section>
+        <section class="hidden s-18">
+            
+        </section>
     </div></div>
     <!--
     <div class="slide" id="Example"><div>
