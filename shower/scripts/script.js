@@ -221,22 +221,16 @@
 				}
 			break;
 
-			case 33: // PgUp
 			case 38: // Up
 			case 37: // Left
-			case 72: // h
-			case 75: // k
 				e.preventDefault();
 
 				currentSlideNumber--;
 				goToSlide(currentSlideNumber);
 			break;
 
-			case 34: // PgDown
 			case 40: // Down
 			case 39: // Right
-			case 76: // l
-			case 74: // j
 				e.preventDefault();
 
 				// Only go to next slide if current slide have no inner
@@ -248,28 +242,6 @@
 					currentSlideNumber++;
 					goToSlide(currentSlideNumber);
 				}
-			break;
-
-			case 36: // Home
-				e.preventDefault();
-
-				currentSlideNumber = 0;
-				goToSlide(currentSlideNumber);
-			break;
-
-			case 35: // End
-				e.preventDefault();
-
-				currentSlideNumber = slideList.length - 1;
-				goToSlide(currentSlideNumber);
-			break;
-
-			case 9: // Tab = +1; Shift + Tab = -1
-			case 32: // Space = +1; Shift + Space = -1
-				e.preventDefault();
-
-				currentSlideNumber += e.shiftKey ? -1 : 1;
-				goToSlide(currentSlideNumber);
 			break;
 
 			default:
