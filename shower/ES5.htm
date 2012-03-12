@@ -16,7 +16,7 @@
 <body class="list">
     <header class="caption">
         <h1>Good parts of ES5</h1>
-        <p>Raynos, <a href="https://github.com/Raynos/">github</a></p>
+        <p>Raynos, <a href="https://github.com/Raynos/">github</a>, <a href="https://twitter.com/#!/Raynos2">twitter</a></p>
     </header>
     <div id="notes-button" class="notes-button">
         notes: off
@@ -67,7 +67,7 @@
     <div class="slide" id="Prototypes"><div>
         <section>
             <header>
-                <h2>Prototypes and Object.create</h2>
+                <h2>Prototypes and <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/create" target="_blank">Object.create</a></h2>
             </header>
             <p> in ES5 </p>
             <pre>
@@ -125,7 +125,7 @@
     <div class="slide" id="Strict mode"><div>
         <section>
             <header>
-                <h2> Benefits of Strict mode </h2>
+                <h2> Benefits of <a href="https://developer.mozilla.org/en/JavaScript/Strict_mode" target="_blank">Strict mode</a></h2>
             </header>
             The following throw errors
             <pre>
@@ -185,7 +185,7 @@
     <div class="slide" id="bind"><div>
         <section>
             <header>
-                <h2> Function.prototype.bind </h2>
+                <h2><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind" target="_blank">Function.prototype.bind</a></h2>
             </header>
             <pre>
                 <code>var f = g.<mark>bind</mark>({ foo: 42 })</code>
@@ -211,9 +211,9 @@
                 <h2> JSON </h2>
             </header>
             <ul>
-                <li> JSON.parse(text[, reviver]) </li>
-                <li> JSON.stringify(value[, replacer [, space]]) </li>
-                <li> .toJSON </li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank"> JSON.parse(text[, reviver]) </a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank"> JSON.stringify(value[, replacer [, space]]) </a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON_behavior" target="_blank"> .toJSON </a></li>
         </section>
         <section class="hidden">
             <p> JSON works natively as of ES5. </p>
@@ -227,376 +227,73 @@
             <p> JSON.stringify also checks for the .toJSON property on the input, if it exists and is a function then it will call that method and stringify the result </p>
         </section>
     </div></div>
-    <!--
-    <div class="slide" id="Example"><div>
+    <div class="slide" id="Miscelanious"><div>
         <section>
             <header>
-                <h2>A simple task - Showing a blog post</h2>
+                <h2> Utility functions </h2>
             </header>
             <ul>
-                <li>Open a database connection</li>
-                <li>Get the blog collection</li>
-                <li>Get the blog post</li>
-                <li>get the author collection</li>
-                <li>get the author data</li>
-                <li>Get the comments collection</li>
-                <li>Get the user collection</li>
-                <li>Iterate over comments</li>
-                <li>Get each comment from the database</li>
-                <li>Get the user data for each comment</li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/isArray" target="_blank"> Array.isArray </a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/Trim" target="_blank"> String#trim </a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/GetPrototypeOf" target="_blank"> Object.getPrototypeOf </a></li>
             </ul>
         </section>
         <section class="hidden">
-            <p> So we want to do a simple task. All you have to do is get a blog post out of the database. That shouldn't be hard right? </p>
+            <p> ES5 has added a few utility functions to the mix </p>
 
-            <p> Well each one of those tasks leads to having a new callback. And for each new callback your going to get another layer of indenting. Welcome to callback hell </p>
+            <p> These are just useful things that have been standardized, They speak for themself, Array.isArray tells you whether something is an array, String.prototype.trim trims the whitespace of a string and Object.getPrototypeOf returns the [[Prototype]] value </p>
         </section>
     </div></div>
-    <div class="slide" id="PyramidOfDoom"><div>
+    <div class="slide" id="array"><div>
         <section>
             <header>
-                <h2>Pyramid Of Doom</h2>
-            </header>
-            <pre class="s-16">
-            <code>step1(function (value1) {</code>
-            <code><mark>    </mark>step2(function (value2) {</code>
-            <code><mark>        </mark>step3(function (value3) {</code>
-            <code><mark>            </mark>step4(function (value4) {</code>
-            <code><mark>                </mark>step5(function (value5) {</code>
-            <code><mark>                    </mark>step6(function (value6) {</code>
-            <code><mark>                        </mark>// Do something with value6</code>
-            <code><mark>                    </mark>});</code>
-            <code><mark>                </mark>});</code>
-            <code><mark>            </mark>});</code>
-            <code><mark>        </mark>});</code>
-            <code><mark>    </mark>});</code>
-            <code>});</code>
-            </pre>
-        </section>
-        <section class="hidden s-18">
-            <p> The code would literally look like this. Except we are going to have 10 levels of indenting because we did asynchronous tasks. And all that just to load a blog post on a page. </p>
-
-            <p> We need to do some real flow control for even the trivial tasks. *Go back to first slide*. If we look at the example of a blog engine using mongodb. You can see 16 levels of indentation. I don't know what you think, but I think that's pretty crazy </p>
-
-            <p> What's wrong with it? Well firstly I don't like reading horizontally. Secondly you have closures and inline functions everywhere. And every time you call the function your making a new function. This opens you up to memory leaks and it's just expensive. </p>
-
-            <p> My personal style guide says you should in indent three times per function. That's one inner function, a loop and an if. Doing this helps readability and maintainability. </p>
-        </section>
-    </div></div>
-    <div class="slide" id="Primitives"><div>
-        <section>
-            <header>
-                <h2>Control Flow primitives</h2>
+                <h2>Array extras</h2>
             </header>
             <ul>
-                <li> Named functions </li>
-                <li> Reference counting </li>
-                <li> next functions </li>
-                <li> event emitters </li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/forEach" target="_blank">forEach</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every" target="_blank">every</a> and <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some" target="_blank">some</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">filter</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map" target="_blank">map</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/reduce" target="_blank">reduce</a> and <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/reduceRight" target="_blank">reduceRight</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf" target="_blank">indexOf</a> and <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf" target="_blank">lastIndexOf</a></li>
             </ul>
-        </section>
-        <section class="hidden s-16">
-            <p> There are multiple times of primitives for flow control. The idea of a primitive is that it's a simple tool that stops you from getting into callback hell. It's a code organization tool </p>
-
-            <p> Named functions allow you to use function declarations and extract those inline anonymous functions into external functions. This flattens your callback hierachy and avoids the pyramid of doom </p>
-
-            <p> Reference counting allows you to call a continuation callback after n asynchronous tasks have finished. This means you can run n asynchronous tasks in parallel and continue after they have all finished </p>
-
-            <p> next functions is the concept of having a list of functions and having a single next function which calls the first function in the list and passes itself in. This allows you to run a function and that function can then say "Ok I'm done, call the next function in the list". It's a method for serial programming </p>
-
-            <p> Event emitters give you a way of listening on something. Say you want to be notified when x happens, you can do that if x exposes an event emitter and an event you can listen on. This means that rather then saying "do y then tell me". You can say "if you ever do y, then tell me" </p>
-        </section>
-    </div></div>
-    <div class="slide" id="NamedFunctions"><div>
-        <section>
-            <header>
-                <h2>Named functions</h2>
-            </header>
-            <pre class="s-18">
-            <code>articlesCollection.find({}, { 'sort':[['title', 1]] }, <mark>iterateCursors</mark>);</code>
-            <code> </code>
-            <code>function <mark>iterateCursors</mark>(err, cursor) {</code>
-            <code>    cursor.each(<mark>logArticle</mark>);</code>
-            <code>});</code>
-            <code> </code>
-            <code>function <mark>logArticle</mark>(err, article) {</code>
-            <code>    if(article != null) {</code>
-            <code>        console.log("[" + article.title + "]");</code>
-            <code>        console.log(">> Closing connection");</code>
-            <code>        <mark>db</mark>.close();</code>
-            <code>    }</code>
-            <code>}</code>
-            </pre>
         </section>
         <section class="hidden">
-            <p> Named functions basically envolves turning all your anonymous functions into function declarations. This means there is now only one of your function and you don't create a new one whenever you call the function </p>
+            <p> ES5 introduces a set of iteration methods on arrays. These are incredibly useful for doing functional style programming </p>
 
-            <p> it also means you can move the function into an outer scope thus reducing nesting </p>
+            <p> forEach runs an iterator function for every element in the array. This is a useful feature because it creates a unique scope for each member of the array </p>
 
-            <p> So rather then indenting your functions directly we take the inline function out, give it a name and put it in a higher scope </p>
+            <p> every and some return a boolean if you return true for every value or true for some values in the array. These are useful for early termination and for determining whether a condition holds for every or some value </p>
 
-            <p> But, can anyone see the problem with this code? </p>
+            <p> filter returns an array with the filtered values only. </p>
+
+            <p> Map returns a new array of the mapped values. It takes an iterator that a new value </p>
+
+            <p> reduce and reduceRight reduce the array to a single value </p>
+
+            <p> indexOf and lastIndexOf return the index of the element in the array </p>
         </section>
     </div></div>
-    <div class="slide" id="Closures"><div>
+    <div class="slide" id="seal"><div>
         <section>
             <header>
-                <h2>Oops closures</h2>
-            </header>
-            <p> Storing data in closure scope causes issues with indenting. This can not be solved by moving them into seperate named functions </p>
-            <ul>
-                <li> Bind </li>
-                <li> pass state in </li>
-                <li> Put similar functions on an object </li>
-                <li> <a href="https://github.com/Raynos/pd#pd.bindAll" target="_blank"> pd.bindAll </a> </li>
-            </ul>
-        </section>
-        <section class="hidden s-14">
-            <p> closures can cause you problems with your code. If you store state in your closure well then you can't just refactor your inline function into a function declaration becuase it needs that data </p>
-
-            <p> This means every function that needs the data has to be created inside your outer function. This can quickly get out of control not to mention it makes memory leaks easier </p>
-
-            <p> There are a few alternatives to having data stored in a closure. One of them is to use bind to curry data into a callback. However bind returns a new function so this has a performance penalty </p>
-
-            <p> An obvouis solution is to just pass data to your function, but this means you can't pass your functions to someone elses API. You have to wrap that and call your own function with the extra data passed in. This is actually the same as binding because your creating a new function </p>
-
-            <p> An alternative solution is to put all your similar functions on an object and bind all those functions to the object. Then just store the data on `this` and pass your callbacks around by `this.foo`. This works nicely because all callbacks always have access to the data through `this` and they are nicely organized on an object, plus you can pass the functions directly to external APIs </p>
-        </section>
-    </div></div>
-    <div class="slide" id="ReferenceCounting"><div>
-        <section>
-            <header>
-                <h2>Reference Counting</h2>
-            </header>
-            <pre class="s-14">
-            <code>var <mark>count = post.comments.length</mark>,</code>
-            <code>    comments = [];</code>
-            <code>post.comments.forEach(fetchComment);</code>
-            <code> </code>
-            <code>function fetchComment(commentId) {</code>
-            <code>    comments.find({ id: commentId }, addToComments);</code>
-            <code>}</code>
-            <code> </code>
-            <code>function addToComments(err, result) {</code>
-            <code>    if (err) throw err;</code>
-            <code>    comments.push(result);</code>
-            <code>    <mark>if (--count === 0) next();</mark></code>
-            <code>}</code>
-            <code> </code>
-            <code>function next() {</code>
-            <code>    /* do stuff with comments */</code>
-            <code>}</code>
-            </pre>
-        </section>
-    </div></div>
-    <div class="slide" id="next-functions"><div>
-        <section>
-            <header>
-                <h2>Next functions</h2>
-            </header>
-            <pre class="s-18">
-            <code>(function loop() {</code>
-            <code>    var task = stack.shift();</code>
-            <code>    task && task(someData, proxy);</code>
-            <code> </code>
-            <code>    function proxy(result) {</code>
-            <code>        /* do something with result */</code>
-            <code>        <mark>loop();</mark></code>
-            <code>     }</code>
-            <code>}());</code>
-            </pre>
-            <a href="https://github.com/senchalabs/connect/blob/master/lib/proto.js#L106" target="_blank">Technique used by TJ in connect</a>
-        </section>
-    </div></div>
-    <div class="slide" id="eventemitters"><div>
-        <section>
-            <header>
-                <h2>Event emitters</h2>
-            </header>
-            <pre class="s-18">
-            <code>var req = http.request(options);</code>
-            <code><mark>req.on</mark>("response", function (res) {</code>
-            <code>    <mark>res.on</mark>("data", function (chunk) {</code>
-            <code>        console.log("BODY: " + chunk);</code>
-            <code>    })</code>
-            <code>});</code>
-            <code><mark>req.on</mark>("error", function (error) {</code>
-            <code>    console.log("oops: ", error);</code>
-            <code>});</code>
-            <code>req.end();</code>
-            </pre>
-        </section>
-    </div></div>
-    <div class="slide" id="Abstractions"><div>
-        <section>
-            <header>
-                <h2>control Flow abstractions</h2>
+                <h2> Seal and friends </h2>
             </header>
             <ul>
-                <li><a href="https://github.com/Raynos/after.js" target="_blank"> After </a></li>
-                <li><a href="https://github.com/Raynos/after.js#after.forEach" target="_blank"> Set Operations </a></li>
-                <li><a href="https://github.com/Raynos/stak" target="_blank"> Stacks </a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/seal" target="_blank">Object.seal</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/preventExtensions" target="_blank">Object.preventExtensions</a></li>
+                <li><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/freeze" target="_blank">Object.freeze</a></li>
             </ul>
+            <p><strong>Verdict:</strong> Security at the cost of performance means No </p>
+        </section>
+        <section class="hidden">
+            <p> Seal, preventExtension and freeze take your dynamic javascript and make it not dynamic. They make objects static and prevent things from happening </p>
+
+            <p> arguably it makes your javascript more secure and you can make more static assertions about what's happening, but that's not really a feature we want from JavaScript </p>
+
+            <p> These functions have significant performance penalties currently and should be avoided. Just like abusing closures for private state has significant performance penalties and should be avoided. I always recommend you favour performance over fake security </p>
         </section>
     </div></div>
-    <div class="slide" id="After"><div>
-        <section>
-            <header>
-                <h2>After</h2>
-            </header>
-            <pre class="s-18">
-                <code><mark>var next = after(arr.count, finished);</mark></code>
-                <code>arr.forEach(doSomethingAsync);</code>
-                <code> </code>
-                <code>function doSomethingAsync(item) {</code>
-                <code>    somethingAsync(item, <mark>next</mark>);</code>
-                <code>}</code>
-                <code> </code>
-                <code>function finished() {</code>
-                <code>    var results = arguments;</code>
-                <code>    /* do some stuff with your results */</code>
-                <code>}</code>
-            </pre>
-            <p> After uses reference counting internally and hides the details from you </p>
-        </section>
-    </div></div>
-    <div class="slide" id="After-count"><div>
-        <section>
-            <header>
-                <h2>Modifying the count</h2>
-            </header>
-            <pre class="s-12">
-                <code>var files = [],</code>
-                <code>    <mark>next = after(1, finished);</mark></code>
-                <code>fs.readdir(somePath, readFolder);</code>
-                <code> </code>
-                <code>function readFolder(err, files) {</code>
-                <code>    fs.readdir(loc, function (err, files) {</code>
-                <code>        <mark>next.count += files.length;</mark></code>
-                <code>        files.forEach(function (file) {</code>
-                <code>            var filePath = path.join(loc, file);</code>
-                <code>            isFile(file) ? fs.readFile(filePath, readFile) : fs.readdir(filePath, readFolder);</code>
-                <code>        });</code>
-                <code>        <mark>next.count--;</mark></code>
-                <code>    });</code>
-                <code>}</code>
-                <code> </code>
-                <code>function readFile(err, file) {</code>
-                <code>    files.push(file);</code>
-                <code>    <mark>next();</mark></code>
-                <code>}</code>
-            </pre>
-        </section>
-    </div></div>
-    <div class="slide" id="Set iterations"><div>
-        <section>
-            <header>
-                <h2>Set Iterations</h2>
-            </header>
-            <pre class="s-18">
-                <code><mark>after.map</mark>(post.comments, mapToComment, finished);</code>
-                <code> </code>
-                <code>function mapToComment(value, callback) {</code>
-                <code>    comments.find({ id: value }, <mark>callback</mark>);</code>
-                <code>}</code>
-                <code> </code>
-                <code>function finished(err, comments) {</code>
-                <code>    /* do stuff with comments */</code>
-                <code>}</code>
-            </pre>
-            <p> Set iterations allow you to do something with a value in parallel.
-            This is a great sugar tool
-            </p>
-        </section>
-    </div></div>
-    <div class="slide" id="Stacks"><div>
-        <section>
-            <header>
-                <h2>Stacks</h2>
-            </header>
-            <pre class="s-12">
-                <code>var fs = require("fs"),</code>
-                <code>    exec = require("child_process").exec,</code>
-                <code>    after = require("after"),</code>
-                <code>    <mark>stack</mark> = Stak.make(function () {</code>
-                <code>        exec('whoami', this.next);</code>
-                <code>    }, function () {</code>
-                <code>        <mark>var next = after(2, this.next);</mark></code>
-                <code>        exec('groups', function (err, groups) {</code>
-                <code>            next("groups", groups);</code>
-                <code>        });</code>
-                <code>        fs.readFile(this.file, 'ascii', function (err, file) {</code>
-                <code>            next("file", file);</code>
-                <code>        });</code>
-                <code>    }, function () {</code>
-                <code>        var data = <mark>after.unpack(arguments);</mark></code>
-                <code>        console.log("Groups : ", data.groups.trim());</code>
-                <code>        console.log("This file has " data.file.length + " bytes");</code>
-                <code>    });</code>
-                <code> </code>
-                <code><mark>stack.handle({ file: __filename });</mark></code>
-            </pre>
-        </section>
-    </div></div>
-    <div class="slide" id="Alternatives"><div>
-        <section>
-            <header>
-                <h2>Open source alternatives</h2>
-            </header>
-            <ul>
-                <li><a href="https://github.com/Raynos/after.js" target="_blank">After</a> and <a href="https://github.com/Raynos/stak" target="_blank">Stak</a></li>
-                <li><a href="https://github.com/creationix/step" target="_blank">Step</a></li>
-                <li><a href="https://github.com/caolan/async" target="_blank">async</a></li>
-                <li><a href="https://github.com/coolaj86/futures" target="_blank">Futures</a> and <a href="https://github.com/kriskowal/q" target="_blank"> Q </a></li>
-                <li> <a href="https://github.com/maxtaco/tamejs" target="_blank">Tame</a> / <a href="https://github.com/laverdet/node-fibers" target="_blank" > Fibers </a> / <a href="https://github.com/Sage/streamlinejs" target="_blank"> streamline </a></li>
-                <li> More control flow libraries from the <a href="http://toolbox.no.de/categories/Control%20Flow" target="_blank">
-                node toolbox </a></li>
-            </ul>
-        </section>
-    </div></div>
-    <div class="slide" id="Questions"><div>
-        <section>
-            <header>
-                <h2>Questions</h2>
-            </header>
-            <h3> Question time, Audience Go! </h3>
-            <a href="https://github.com/Raynos/presentation/blob/master/shower/x.js" target="_blank"> Rewrote the mongodb blog example using stak </a>
-        </section>
-    </div></div>
-    -->
-    <!--
-    <div class="slide" id="InnerNavigation"><div>
-        <section>
-            <header>
-                <h2>Inner Navigation</h2>
-            </header>
-            <ol class="inner">
-                <li class="active">This tool is provided</li>
-                <li>Without warranty, guarantee</li>
-                <li>Or much in the way of explanation
-                <li>Erase your hard drive.</li>
-            </ol>
-        </section>
-    </div></div>
-    <div class="slide" id="ThankYou"><div>
-        <section>
-            <header>
-                <h2>Shower Presentation Template</h2>
-            </header>
-            <p>Vadim Makeev, Opera Software</p>
-            <ul>
-                <li><a href="http://pepelsbey.net">pepelsbey.net</a></li>
-                <li><a href="http://twitter.com/pepelsbey">twitter.com/pepelsbey</a></li>
-                <li><a href="mailto:pepelsbey@gmail.com">pepelsbey@gmail.com</a></li>
-            </ul>
-            <p>Shower: <a href="http://github.com/pepelsbey/shower">github.com/pepelsbey/shower</a></p>
-        </section>
-    </div></div>
-    -->
-    <!--
-        To hide progress bar from entire presentation
-        just remove “progress” element.
-        -->
     <div class="progress"><div></div></div>
     <script src="scripts/script.js"></script>
     <!-- Copyright © 2010–2011 Vadim Makeev, http://pepelsbey.net/ -->
